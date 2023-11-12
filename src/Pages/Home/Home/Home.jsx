@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet-async";
 import Banner from "../Banner/Banner";
 import Category from "../Category/Category";
 import Featured from "../Featured/Featured";
@@ -7,7 +8,10 @@ import TestMonials from "../TestMonials/TestMonials";
 const Home = () => {
     return (
         <div>
-
+            <Helmet>
+                <title>Returent Menu</title>
+                <link rel="canonical" href="https://www.tacobell.com/" />
+            </Helmet>
             <Banner></Banner>
             <Category></Category>
             <OurMenu></OurMenu>
