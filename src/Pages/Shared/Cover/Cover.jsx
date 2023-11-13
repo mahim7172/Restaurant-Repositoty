@@ -6,12 +6,12 @@ const Cover = ({ img, title, description }) => {
     return (
         <div>
             <Parallax
-                blur={{ min: -500, max: 500 }}
+                blur={{ min: -100, max: 100 }}
                 bgImage={img}
-                bgImageAlt="the dog"
+                bgImageAlt="the menu"
                 strength={-200}
             >
-                <div className="hero min-h-[700px]" style={{ backgroundImage: `url("${img}")` }}>
+                <div className="hero h-[600px] px-28 py-36" style={{ backgroundImage: `url("${img}")` }}>
 
                     <div className="hero-overlay bg-opacity-60"></div>
 
@@ -23,7 +23,7 @@ const Cover = ({ img, title, description }) => {
 
                             <p className="mb-5 uppercase">{description}</p>
 
-                            <button className="btn btn-primary">Get Started</button>
+
 
                         </div>
 

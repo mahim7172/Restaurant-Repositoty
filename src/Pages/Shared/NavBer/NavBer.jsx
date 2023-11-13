@@ -26,6 +26,16 @@ const NavBer = () => {
                     Menu
                 </NavLink>
             </li>
+            <li>
+                <NavLink
+                    to="order"
+                    className={({ isActive, isPending }) =>
+                        isPending ? "pending" : isActive ? "active" : ""
+                    }
+                >
+                    Order
+                </NavLink>
+            </li>
 
         </>
 
