@@ -23,7 +23,7 @@ const Menu = () => {
         <div>
 
             <Helmet>
-                <title>Returent Menu</title>
+                <title>Returent | Menu</title>
                 <link rel="canonical" href="https://www.tacobell.com/" />
             </Helmet>
             <Cover
@@ -31,6 +31,7 @@ const Menu = () => {
                 title="Our menu"
                 description={"Would you like to try a dish?"}
             ></Cover>
+
             {/* main cover */}
             <div className='my-10'>
                 <SectionTitle
@@ -39,10 +40,12 @@ const Menu = () => {
                 >
                 </SectionTitle>
             </div>
+
             {/* offered */}
             <MenuCategory
                 items={offered}
             ></MenuCategory>
+
             {/* dessert */}
             <MenuCategory
                 coverImg={dessertImg}
@@ -53,6 +56,7 @@ const Menu = () => {
                 printer took a galley of type and scrambled 
                 it to make a type specimen book."
             ></MenuCategory>
+
             {/* pizza */}
             <MenuCategory
                 items={pizza}
@@ -64,6 +68,7 @@ const Menu = () => {
                 when an unknown printer took a galley of type and
                  scrambled it to make a type specimen book."
             ></MenuCategory>
+
             {/* salad*/}
             <MenuCategory
                 items={salad}
@@ -75,6 +80,7 @@ const Menu = () => {
                 when an unknown printer took a galley of type and
                  scrambled it to make a type specimen book."
             ></MenuCategory>
+
             {/* soup*/}
             <MenuCategory
                 items={soup}
