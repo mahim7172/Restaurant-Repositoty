@@ -18,7 +18,7 @@ const Menu = () => {
     const salad = menu.filter(item => item.category === "salad")
     const pizza = menu.filter(item => item.category === "pizza")
     const soup = menu.filter(item => item.category === "soup")
-    console.log(dessert)
+    // console.log(dessert)
     return (
         <div>
 
@@ -50,7 +50,7 @@ const Menu = () => {
             <MenuCategory
                 coverImg={dessertImg}
                 items={dessert}
-                title="Dessert"
+                title="dessert"
                 description="Lorem Ipsum has been the industry’s 
                 standard dummy text ever since the 1500s, when an unknown 
                 printer took a galley of type and scrambled 
@@ -61,7 +61,7 @@ const Menu = () => {
             <MenuCategory
                 items={pizza}
                 coverImg={pizzaImg}
-                title={"PIZZA"}
+                title={"pizza"}
                 description="Lorem Ipsum has 
                 been the industry’s standard 
                 dummy text ever since the 1500s, 

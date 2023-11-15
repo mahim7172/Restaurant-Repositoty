@@ -3,6 +3,7 @@ import MenuItem from "../../../Components/MenuItem/MenuItem";
 import Cover from "../../Shared/Cover/Cover";
 
 const MenuCategory = ({ items, title, coverImg, description }) => {
+    // console.log(title)
     return (
         <div className="mb-14">
             {title

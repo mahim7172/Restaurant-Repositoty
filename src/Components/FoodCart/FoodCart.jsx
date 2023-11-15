@@ -15,7 +15,7 @@ const FoodCart = ({ item }) => {
                     <p>{recipe}</p>
 
                     <div className="card-actions justify-end">
-                        <button className="btn btn-primary">Add to cart</button>
+                        <button className="btn btn-outline border-0 border-b-4 border-[#BB8506] text-[#BB8506] hover:text-[#BB8506]  hover:bg-slate-800 ">Add to cart</button>
                     </div>
                 </div>
             </div>
