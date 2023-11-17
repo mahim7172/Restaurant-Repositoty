@@ -4,8 +4,12 @@ import NavBer from "../Pages/Shared/NavBer/NavBer";
 
 const Layout = () => {
     const location = useLocation()
-    const noNavFooter = location.pathname.includes("login")
-    console.log(location)
+
+    const noNavFooter =
+        location.pathname.includes("login")
+        ||
+        location.pathname.includes("/register")
+
     return (
         <div>
             {noNavFooter || <NavBer></NavBer>}
