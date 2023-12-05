@@ -1,8 +1,17 @@
+import { useContext } from "react";
 import { NavLink } from "react-router-dom";
-
+import { AuthContext } from "../../../Auth/AuthProvider";
+import { TiShoppingCart } from 'react-icons/ti';
 
 const NavBer = () => {
-
+    const { user, logoutUser } = useContext(AuthContext)
+    const handleLogOut = () => {
+        logoutUser()
+            .then(() => { })
+            .catch(err => {
+                console.log(err)
+            })
+    }
     const navOption =
         <>
 
@@ -28,6 +37,16 @@ const NavBer = () => {
             </li>
             <li>
                 <NavLink
+                    to="secret"
+                    className={({ isActive, isPending }) =>
+                        isPending ? "pending" : isActive ? "active" : ""
+                    }
+                >
+                    Secret
+                </NavLink>
+            </li>
+            <li>
+                <NavLink
                     to="order/dessert"
                     className={({ isActive, isPending }) =>
                         isPending ? "pending" : isActive ? "active" : ""
@@ -36,16 +55,36 @@ const NavBer = () => {
                     Order
                 </NavLink>
             </li>
-            <li>
-                <NavLink
-                    to="login"
-                    className={({ isActive, isPending }) =>
-                        isPending ? "pending" : isActive ? "active" : ""
-                    }
-                >
-                    Login
-                </NavLink>
-            </li>
+            {
+                user
+                    ?
+                    <>
+
+                        <li>
+
+                            <NavLink
+                                onClick={handleLogOut}
+                                className={({ isActive, isPending }) =>
+                                    isPending ? "pending" : isActive ? "active" : ""
+                                }
+                            >
+                                LogOut
+                            </NavLink>
+                        </li>
+                    </>
+                    :
+                    <li>
+                        <NavLink
+                            to="login"
+                            className={({ isActive, isPending }) =>
+                                isPending ? "pending" : isActive ? "active" : ""
+                            }
+                        >
+                            Login
+                        </NavLink>
+                    </li>
+
+            }
 
         </>
 
@@ -69,7 +108,13 @@ const NavBer = () => {
                         {navOption}
                     </ul>
                 </div>
+
                 <div className="navbar-end">
+                    <button className="flex border-2 rounded-lg p-1 bg-gray-600 bg-opacity-50">
+                        <TiShoppingCart />
+                        <div className="badge badge-primary bg-blue-700">+0</div>
+                    </button>
+                    <span className="mx-2"> {user?.email}</span>
                     <a className="btn">Button</a>
                 </div>
             </div>

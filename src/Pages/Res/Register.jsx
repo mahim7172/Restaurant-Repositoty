@@ -1,14 +1,46 @@
-// import { useContext } from "react";
+
 import { Helmet } from "react-helmet-async";
 import registerImg from '../../assets/others/authentication.gif';
 
 // import { AuthContext } from "../../Auth/AuthProvider";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { useContext } from "react";
+import { AuthContext } from "../../Auth/AuthProvider";
+import Swal from "sweetalert2";
 const Register = () => {
-    const { register, handleSubmit, formState: { errors }, } = useForm()
+    const { register, handleSubmit, reset, formState: { errors }, } = useForm()
+    const { creatUser, updateProfile } = useContext(AuthContext)
+    const navigate = useNavigate()
+    const onSubmit = (data) => {
 
-    const onSubmit = (data) => console.log(data)
+        console.log(data.email, data.password, data.photoURL)
+        creatUser(data.email, data.password)
+            .then(res => {
+                const loggedUser = res.user
+                console.log(loggedUser)
+                updateProfile(data.name, data.photoURL)
+                    .then(() => {
+                        console.log('user profile updated')
+                        reset()
+                        Swal.fire({
+                            position: "top-end",
+                            icon: "success",
+                            title: "Your work has been saved",
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                        navigate('/')
+                    })
+                    .catch(err => {
+                        console.log(err)
+                    })
+            })
+            .catch(() => {
+                // console.log(err.message)
+
+            })
+    }
     // const { creatUser } = useContext(AuthContext)
 
 
@@ -49,13 +81,31 @@ const Register = () => {
                                     <span className="label-text">Name</span>
                                 </label>
                                 <input
-                                    {...register("name", { required: true })}
+                                    {...register("name", {
+                                        required: true
+                                    })}
                                     type="name"
                                     name="name"
                                     placeholder="name"
                                     className="input input-bordered"
-                                    required />
+                                />
                                 {errors.name && <span className="text-red-600">Name is required</span>}
+                            </div>
+                            {/* photo url */}
+                            <div className="form-control">
+                                <label className="label">
+                                    <span className="label-text">Photo URL</span>
+                                </label>
+                                <input
+                                    {...register("photoURL", {
+                                        required: true
+                                    })}
+                                    type="photoURL"
+                                    name="photoURL"
+                                    placeholder="Photo URL"
+                                    className="input input-bordered"
+                                />
+                                {errors.photoURL && <span className="text-red-600">Photo URL is required</span>}
                             </div>
                             {/* email */}
                             <div className="form-control">
@@ -63,12 +113,14 @@ const Register = () => {
                                     <span className="label-text">Email</span>
                                 </label>
                                 <input
-                                    {...register("email", { required: true })}
+                                    {...register("email", {
+                                        required: true
+                                    })}
                                     type="email"
                                     name="email"
                                     placeholder="email"
                                     className="input input-bordered"
-                                    required />
+                                />
                                 {errors.name && <span className="text-red-600">Email is required</span>}
                             </div>
                             {/* password */}
@@ -77,14 +129,28 @@ const Register = () => {
                                     <span className="label-text">Password</span>
                                 </label>
                                 <input
-                                    {...register("password", { required: true, minLength: 6, maxLength: 20 })}
+                                    {...register("password", {
+                                        required: true,
+                                        minLength: 6,
+                                        maxLength: 20,
+                                        pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).+$/
+                                    })}
                                     type="password"
                                     name="password"
                                     placeholder="password"
                                     className="input input-bordered"
-                                    required />
+                                />
                                 {errors.password?.type === "required" && (
                                     <p className="text-orange-800">Password is required</p>
+                                )}
+                                {errors.password?.type === "minLength" && (
+                                    <p className="text-orange-800">Password must be 6 chacters</p>
+                                )}
+                                {errors.password?.type === "maxLength" && (
+                                    <p className="text-orange-800">Password must be less then 20 chacters</p>
+                                )}
+                                {errors.password?.type === "pattern" && (
+                                    <p className="text-orange-800">It must contain at least one uppercase letter, one lowercase letter and one special character</p>
                                 )}
                                 <label className="label">
                                     <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
