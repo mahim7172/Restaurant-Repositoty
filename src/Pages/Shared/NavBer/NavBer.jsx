@@ -1,10 +1,12 @@
 import { useContext } from "react";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../../../Auth/AuthProvider";
 import { TiShoppingCart } from 'react-icons/ti';
+import useCard from "../../../Hooks/useCard";
 
 const NavBer = () => {
     const { user, logoutUser } = useContext(AuthContext)
+    const [card] = useCard()
     const handleLogOut = () => {
         logoutUser()
             .then(() => { })
@@ -110,10 +112,12 @@ const NavBer = () => {
                 </div>
 
                 <div className="navbar-end">
-                    <button className="flex border-2 rounded-lg p-1 bg-gray-600 bg-opacity-50">
-                        <TiShoppingCart />
-                        <div className="badge badge-primary bg-blue-700">+0</div>
-                    </button>
+                    <Link to="/dashboard/cart">
+                        <button className="flex border-2 rounded-lg p-1 bg-gray-600 bg-opacity-50 hover:border-sky-600">
+                            <TiShoppingCart />
+                            <div className="badge badge-primary bg-blue-700 hover:bg-sky-600">+{card.length}</div>
+                        </button>
+                    </Link>
                     <span className="mx-2"> {user?.email}</span>
                     <a className="btn">Button</a>
                 </div>

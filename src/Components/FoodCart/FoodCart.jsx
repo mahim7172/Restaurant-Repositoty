@@ -1,17 +1,49 @@
 
 import Swal from "sweetalert2";
 import UseAuth from "../../Hooks/UseAuth";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import UseAxiosSecure from "../../Hooks/UseAxiosSecure";
+import useCard from "../../Hooks/useCard";
+
 
 const FoodCart = ({ item }) => {
 
-    const { recipe, name, image, price } = item
+    const { recipe, name, image, price, _id } = item
     const { user } = UseAuth()
     const navigate = useNavigate()
-    const handleAddToCart = food => {
-        console.log(food, user?.email)
+    const location = useLocation()
+    const axiosSecure = UseAxiosSecure()
+    const [, refetch] = useCard()
+
+
+    const handleAddToCart = () => {
+
         if (user && user.email) {
+            // console.log(food, user?.email)
             // todo : send card item to database
+            const cartItem = {
+                menuId: _id,
+                email: user.email,
+                name,
+                image,
+                price
+            }
+            axiosSecure.post('/cards', cartItem)
+                .then(res => {
+                    // console.log(res?.data)
+                    if (res.data.insertedId) {
+                        Swal.fire({
+                            position: "top-end",
+                            icon: "success",
+                            title: `${name}  added to your carts`,
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                        // refetch cart to update the cart items count
+                        refetch();
+                    }
+                })
+
         }
         else {
             Swal.fire({
@@ -25,7 +57,7 @@ const FoodCart = ({ item }) => {
             }).then((result) => {
                 if (result.isConfirmed) {
                     // send the login page
-                    navigate('/login')
+                    navigate('/login', { state: { from: location } })
                 }
             });
         }
@@ -46,7 +78,7 @@ const FoodCart = ({ item }) => {
 
                     <div className="card-actions justify-end">
                         <button
-                            onClick={() => handleAddToCart(item)}
+                            onClick={handleAddToCart}
                             className="btn btn-outline border-0 border-b-4 border-[#BB8506] text-[#BB8506] hover:text-[#BB8506]  hover:bg-slate-800 "
                         >
                             Add to cart
