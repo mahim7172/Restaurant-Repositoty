@@ -9,7 +9,7 @@ const useCard = () => {
         queryKey: ['card', user?.email],
         queryFn: async () => {
             const res = await axiosSecure.get(`/cards?email=${user?.email}`)
-            console.log(res)
+
             return res.data;
         }
     })

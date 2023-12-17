@@ -7,7 +7,9 @@ import { TbBrandBooking } from "react-icons/tb";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { RiShoppingBagFill } from "react-icons/ri";
 import { MdContacts } from "react-icons/md";
+import useCard from "../Hooks/useCard";
 const Dashbord = () => {
+    const [card] = useCard()
     return (
         <div className="flex">
             <div className="w-64 min-h-screen bg-orange-400">
@@ -51,7 +53,7 @@ const Dashbord = () => {
                         <NavLink
                             className="hover:border-b-2"
                             to="/dashboard/cart">
-                            <FaCartShopping /> My Card
+                            <FaCartShopping /> My Card {card.length}
                         </NavLink>
                     </li>
                     <div className="divider"></div>

@@ -1,9 +1,39 @@
+import Swal from "sweetalert2";
 import useCard from "../../../Hooks/useCard";
 import { RiDeleteBin2Fill } from "react-icons/ri";
+import UseAxiosSecure from "../../../Hooks/UseAxiosSecure";
 const Cart = () => {
-    const [card] = useCard()
+    const [card, refetch] = useCard()
     const totalPrice = card.reduce((total, item) => total + item.price, 0)
-    console.log(totalPrice)
+    const axiosSecoure = UseAxiosSecure()
+    const handleDelete = id => {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+
+                axiosSecoure.delete(`/cards/${id}`)
+                    .then(res => {
+                        if (res.data.deletedCount > 0) {
+                            Swal.fire({
+                                title: "Deleted!",
+                                text: "Your file has been deleted.",
+                                icon: "success"
+                            });
+                            refetch()
+                        }
+                    })
+            }
+        });
+    }
+
+
     return (
         <div>
             <div className="text-4xl flex justify-evenly ">
@@ -46,7 +76,11 @@ const Cart = () => {
                                 </td>
                                 <td>{item?.price}</td>
                                 <th>
-                                    <button className=" btn btn-md bg-red-600  text-xl text-white hover:text-black"><RiDeleteBin2Fill /></button>
+                                    <button
+                                        onClick={() => handleDelete(item._id)}
+                                        className=" btn btn-md bg-red-600  text-xl text-white hover:text-black">
+                                        <RiDeleteBin2Fill />
+                                    </button>
                                 </th>
                             </tr>)
                         }
