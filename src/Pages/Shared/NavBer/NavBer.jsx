@@ -119,7 +119,8 @@ const NavBer = () => {
                         </button>
                     </Link>
                     <span className="mx-2"> {user?.email}</span>
-                    <a className="btn">Button</a>
+                    {/* <img src={card?.photoURL} alt="" /> */}
+
                 </div>
             </div>
         </div>

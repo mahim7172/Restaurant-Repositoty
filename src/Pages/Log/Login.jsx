@@ -5,6 +5,7 @@ import { loadCaptchaEnginge, LoadCanvasTemplate, validateCaptcha } from 'react-s
 import { AuthContext } from "../../Auth/AuthProvider";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import SocialLogin from "../../Components/SocialLogin/SocialLogin";
 
 
 const Login = () => {
@@ -15,7 +16,7 @@ const Login = () => {
     const navigate = useNavigate()
     const location = useLocation()
     const from = location.state?.from?.pathname || "/";
-    console.log("state in the location ", location?.state)
+    // console.log("state in the location ", location?.state)
     console.log(from)
 
 
@@ -133,10 +134,15 @@ const Login = () => {
                             <p>New Here ? Create an account <Link className="text-lg font-semibold text-sky-500 hover:underline" to="/register">Register</Link></p>
                         </form>
 
+                        <div className=" flex gap-4 justify-center mb-3 ">
+                            <SocialLogin></SocialLogin>
+                            <div className="border-l-2" > </div>
+                            <SocialLogin></SocialLogin>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </div >
     );
 };
 

@@ -8,58 +8,82 @@ import { useForm } from "react-hook-form";
 import { useContext } from "react";
 import { AuthContext } from "../../Auth/AuthProvider";
 import Swal from "sweetalert2";
+import useAxiosPublic from "../../Hooks/useAxiosPublic";
+import SocialLogin from "../../Components/SocialLogin/SocialLogin";
 const Register = () => {
+    const axiosPublic = useAxiosPublic()
     const { register, handleSubmit, reset, formState: { errors }, } = useForm()
     const { creatUser, updateProfile } = useContext(AuthContext)
     const navigate = useNavigate()
     const onSubmit = (data) => {
 
-        console.log(data.email, data.password, data.photoURL)
+        // console.log(data.email, data.password, data.photoURL)
         creatUser(data.email, data.password)
             .then(res => {
                 const loggedUser = res.user
                 console.log(loggedUser)
                 updateProfile(data.name, data.photoURL)
                     .then(() => {
-                        console.log('user profile updated')
-                        reset()
-                        Swal.fire({
-                            position: "top-end",
-                            icon: "success",
-                            title: "Your work has been saved",
-                            showConfirmButton: false,
-                            timer: 1500
-                        });
-                        navigate('/')
+                        // console.log('user profile updated')
+                        // const userInfo = {
+                        //     name: data.name,
+                        //     email: data.email
+
+                        // }
+                        // console.log(userInfo)
+                        // axiosPublic.post('/users', userInfo)
+                        //     .then(res => {
+                        //         if (res.data.insertedId) {
+                        //             console.log('user add hoise')
+                        //             reset()
+                        //             Swal.fire({
+                        //                 position: "top-end",
+                        //                 icon: "success",
+                        //                 title: "Your work has been saved",
+                        //                 showConfirmButton: false,
+                        //                 timer: 1500
+                        //             });
+                        //             navigate('/')
+
+                        //         }
+                        //     })
+
+
                     })
                     .catch(err => {
                         console.log(err)
                     })
             })
-            .catch(() => {
-                // console.log(err.message)
+            .catch(err => {
+                console.log('user error ', err.message, err.code)
 
             })
+        // console.log('user profile updated')
+        const userInfo = {
+            name: data.name,
+            email: data.email,
+            password: data.password
+
+        }
+
+        axiosPublic.post('/users', userInfo)
+            .then(res => {
+                if (res.data.insertedId) {
+                    // console.log('user add hoise')
+                    reset()
+                    Swal.fire({
+                        position: "top-end",
+                        icon: "success",
+                        title: "Your work has been saved",
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                    navigate('/')
+
+                }
+            })
+
     }
-    // const { creatUser } = useContext(AuthContext)
-
-
-    // const handleRegister = event => {
-    //     event.preventDefault();
-    //     const form = event.target;
-    //     const email = form.email.value;
-    //     const password = form.password.value;
-    //     console.log(email, password);
-    //     creatUser(email, password)
-    //         .then(res => {
-    //             const user = res.user;
-    //             console.log(user);
-    //         })
-    //         .catch(err => {
-    //             const message = err.message;
-    //             console.log(message);
-    //         })
-    // }
 
 
     return (
@@ -166,6 +190,12 @@ const Register = () => {
                             </div>
                             <p>Already have an account <Link className="text-lg font-semibold text-sky-500 hover:underline" to="/login">Login</Link> Please</p>
                         </form>
+
+                        <div className=" flex gap-4 justify-center mb-3 ">
+                            <SocialLogin></SocialLogin>
+                            <div className="border-l-2" > </div>
+                            <SocialLogin></SocialLogin>
+                        </div>
                     </div>
                 </div>
             </div>
