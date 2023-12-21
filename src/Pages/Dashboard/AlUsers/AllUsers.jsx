@@ -10,14 +10,30 @@ const AllUsers = () => {
     const { data: users = [], refetch } = useQuery({
         queryKey: ['users'],
         queryFn: async () => {
-            const res = await axiosSeccure('/users')
-            return res.data
+            const res = await axiosSeccure('/users', {
+                headers: {
+                    authorization: `Bearer${localStorage.getItem('access-token')}`
+                }
+            })
+            return res?.data
         },
     })
 
     //  make admin
     const handleMakeAdmin = user => {
-
+        axiosSeccure.patch(`/users/admin/${user._id}`)
+            .then(res => {
+                console.log(res.data)
+                if (res.data.modifiedCount > 0) {
+                    refetch()
+                    Swal.fire({
+                        title: `${user.name}`,
+                        text: " is an admin Now",
+                        icon: "success",
+                        position: "top-end"
+                    });
+                }
+            })
     }
     const handleDelete = user => {
         Swal.fire({
@@ -69,12 +85,15 @@ const AllUsers = () => {
                                     <th>{index + 1}</th>
                                     <td>{user?.name}</td>
                                     <td>{user?.email}</td>
-                                    <td><button
-                                        onClick={() => handleMakeAdmin(user)}
-                                        className=" btn btn-md bg-[#D1A054]  text-xl text-white hover:text-black">
-                                        <FaUsers />
-
-                                    </button></td>
+                                    <td>
+                                        {
+                                            user?.role === 'admin' ? 'Admin' : <button
+                                                onClick={() => handleMakeAdmin(user)}
+                                                className=" btn btn-md bg-[#D1A054]  text-xl text-white hover:text-black">
+                                                <FaUsers />
+                                            </button>
+                                        }
+                                    </td>
                                     <td><button
                                         onClick={() => handleDelete(user)}
                                         className=" btn btn-md bg-red-600  text-xl text-white hover:text-black">
