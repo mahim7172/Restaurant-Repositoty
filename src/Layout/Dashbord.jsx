@@ -9,10 +9,11 @@ import { RiShoppingBagFill } from "react-icons/ri";
 import { ImSpoonKnife } from "react-icons/im";
 import { MdContacts, MdManageHistory } from "react-icons/md";
 import useCard from "../Hooks/useCard";
+import useAdmin from "../Hooks/useAdmin";
 const Dashbord = () => {
     const [card] = useCard()
     // TODO 
-    const isAdmin = true;
+    const [isAdmin] = useAdmin();
     return (
         <div className="flex">
             <div className="w-64 min-h-screen bg-orange-400">
