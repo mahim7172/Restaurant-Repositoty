@@ -43,9 +43,7 @@ const ManageItem = () => {
         });
     }
 
-    const handleUpdate = item => {
-        console.log(item)
-    }
+
     return (
         <div>
             <SectionTitle heading="MANAGE ALL ITEMS" subHeading="Hurry Up"></SectionTitle>
@@ -93,7 +91,7 @@ const ManageItem = () => {
                                 <th>
                                     <Link to={`/dashboard/updateItem/${item._id}`}>
                                         <button
-                                            onClick={() => handleUpdate(item._id)}
+
                                             className=" btn btn-md bg-orange-400  text-xl text-white hover:text-black">
                                             <FaEdit />
                                         </button>
