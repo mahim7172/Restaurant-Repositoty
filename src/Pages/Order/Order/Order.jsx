@@ -17,7 +17,7 @@ const Order = () => {
     const initialIndex = categoryes.indexOf(category)
     const [tabIndex, setTabindex] = useState(initialIndex)
 
-    console.log(category)
+    // console.log(category)
     const [menu] = useMenu()
 
 

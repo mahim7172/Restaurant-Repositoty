@@ -11,7 +11,7 @@ const NavBer = () => {
         logoutUser()
             .then(() => { })
             .catch(err => {
-                console.log(err)
+                // console.log(err)
             })
     }
     const navOption =
