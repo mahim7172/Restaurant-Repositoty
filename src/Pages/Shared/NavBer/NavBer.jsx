@@ -11,7 +11,7 @@ const NavBer = () => {
         logoutUser()
             .then(() => { })
             .catch(err => {
-                // console.log(err)
+                console.log(err)
             })
     }
     const navOption =
@@ -103,10 +103,10 @@ const NavBer = () => {
                             {navOption}
                         </ul>
                     </div>
-                    <a className="btn btn-ghost normal-case text-xl">daisyUI</a>
+                    <Link to="/" reloadDocument><button className=" btn btn-sm md:btn-md  md:text-xl font-semibold bg-slate-800 bg-opacity-70 md:px-3 md:py-2 rounded-xl text-white">Resturent</button></Link>
                 </div>
                 <div className="navbar-center hidden lg:flex">
-                    <ul className="menu menu-horizontal px-1">
+                    <ul className="menu menu-horizontal  px-1">
                         {navOption}
                     </ul>
                 </div>
@@ -123,6 +123,7 @@ const NavBer = () => {
 
                 </div>
             </div>
+
         </div>
     );
 };
