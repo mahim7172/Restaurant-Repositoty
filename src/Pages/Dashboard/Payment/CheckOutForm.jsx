@@ -18,7 +18,7 @@ const CheckOutForm = () => {
         axiosSecure.post('/create-payment-intent', { price: totalPrice })
             .then(res => {
                 setClientSecret(res.data.clientSecret)
-                console.log(res.data.clientSecret);
+                // console.log(res.data.clientSecret);
             })
 
     }, [axiosSecure, totalPrice])
@@ -75,6 +75,20 @@ const CheckOutForm = () => {
             if (paymentIntent.status === 'succeeded') {
                 setTransactionId(paymentIntent.id)
                 console.log('transaction id ', paymentIntent.id)
+
+                // now save the payment in the database
+                const payment = {
+                    email: user.email,
+                    price: totalPrice,
+                    transactionId: paymentIntent.id,
+                    date: new Date(),  // utc date convert . use moment js to
+                    cardId: card.map(item => item._id),
+                    menuItemId: card.map(item => item.menuId),
+                    status: 'panding'
+                }
+
+                const res = await axiosSecure.post('/payment', payment);
+                console.log(' payment save', res.data)
             }
         }
 
@@ -99,7 +113,7 @@ const CheckOutForm = () => {
                 }}
             />
             <button
-                disabled={!stripe || !clientSecret}
+                // disabled={!stripe || !clientSecret}
                 className="bg-orange-500 text-white py-2 px-3 mt-4 rounded-lg font-bold hover:bg-slate-500 hover:text-white" type="submit" disabled={!stripe}>
                 Pay
             </button>
