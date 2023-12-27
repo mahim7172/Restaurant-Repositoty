@@ -2,6 +2,7 @@ import Swal from "sweetalert2";
 import useCard from "../../../Hooks/useCard";
 import { RiDeleteBin2Fill } from "react-icons/ri";
 import UseAxiosSecure from "../../../Hooks/UseAxiosSecure";
+import { Link } from "react-router-dom";
 const Cart = () => {
     const [card, refetch] = useCard()
     const totalPrice = card.reduce((total, item) => total + item.price, 0)
@@ -39,7 +40,13 @@ const Cart = () => {
             <div className="text-4xl flex justify-evenly ">
                 <h2>Total Ordes : {card.length} </h2>
                 <h2>Total Price : {totalPrice} </h2>
-                <button className="btn btn-primary">Pay</button>
+                {
+                    card.length
+                        ?
+                        <Link to="/dashboard/payment"> <button disabled={!card.length} className="btn btn-primary">Pay</button></Link>
+                        :
+                        <button disabled className="btn btn-primary">Pay</button>
+                }
             </div>
             <div className="overflow-x-auto mt-5">
                 <table className="table ">
