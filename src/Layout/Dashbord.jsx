@@ -19,7 +19,8 @@ const Dashbord = () => {
             <div className="w-64 min-h-screen bg-orange-400">
                 <ul className="menu p-2">
                     {
-                        isAdmin ?
+                        isAdmin
+                            ?
                             <>
                                 <li>
                                     <NavLink
