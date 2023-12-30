@@ -3,9 +3,11 @@ import { Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../../../Auth/AuthProvider";
 import { TiShoppingCart } from 'react-icons/ti';
 import useCard from "../../../Hooks/useCard";
+import useAdmin from "../../../Hooks/useAdmin";
 
 const NavBer = () => {
     const { user, logoutUser } = useContext(AuthContext)
+    const [isAdmin] = useAdmin()
     const [card] = useCard()
     const handleLogOut = () => {
         logoutUser()
@@ -37,7 +39,33 @@ const NavBer = () => {
                     Menu
                 </NavLink>
             </li>
-            <li>
+            {
+                user && isAdmin && <li>
+                    <NavLink
+                        to="/dashboard/adminHome"
+                        className={({ isActive, isPending }) =>
+                            isPending ? "pending" : isActive ? "active" : ""
+                        }
+                    >
+                        Admin Home
+                    </NavLink>
+                </li>
+            }
+            {
+                user && !isAdmin && <li>
+                    <NavLink
+                        to="/dashboard/userHome"
+                        className={({ isActive, isPending }) =>
+                            isPending ? "pending" : isActive ? "active" : ""
+                        }
+                    >
+                        User Home
+                    </NavLink>
+                </li>
+            }
+
+
+            {/* <li>
                 <NavLink
                     to="secret"
                     className={({ isActive, isPending }) =>
@@ -46,7 +74,7 @@ const NavBer = () => {
                 >
                     Secret
                 </NavLink>
-            </li>
+            </li> */}
             <li>
                 <NavLink
                     to="order/dessert"

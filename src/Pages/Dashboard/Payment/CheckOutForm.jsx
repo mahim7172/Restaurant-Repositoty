@@ -4,6 +4,7 @@ import UseAxiosSecure from '../../../Hooks/UseAxiosSecure';
 import useCard from "../../../Hooks/useCard";
 import UseAuth from "../../../Hooks/UseAuth";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 const CheckOutForm = () => {
     const [error, setError] = useState('')
@@ -13,6 +14,7 @@ const CheckOutForm = () => {
     const stripe = useStripe()
     const elements = useElements()
     const axiosSecure = UseAxiosSecure()
+    const navigate = useNavigate()
     const [cart, refetch] = useCard()
 
 
@@ -113,6 +115,7 @@ const CheckOutForm = () => {
                           `
                         }
                     });
+                    navigate("/dashboard/paymentHistory");
                 }
 
                 refetch()

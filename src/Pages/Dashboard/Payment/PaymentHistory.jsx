@@ -18,25 +18,26 @@ const PaymentHistory = () => {
     return (
         <div>
             <SectionTitle heading={'Payment History'} subHeading={'taka'}></SectionTitle>
-            <h2 className="text-2xl text-orange-600 "> Total Payments : {payment?.length}</h2>
+            <h2 className="text-2xl bg-orange-500 text-white font-bold text-center p-1 rounded-lg mb-2 "> Total Payments : {payment?.length}</h2>
             <div className="overflow-x-auto">
                 <table className="table table-zebra">
                     {/* head */}
                     <thead>
-                        <tr>
+                        <tr className="bg-orange-400 text-white">
                             <th>#</th>
-                            <th>Email Name</th>
+                            <th>transactionId</th>
                             <th>Price</th>
-                            <th>date</th>
+                            <th>Status</th>
+
                         </tr>
                     </thead>
                     <tbody>
                         {
                             payment.map((item, index) => <tr key={item._id}>
                                 <th>{index + 1}</th>
-                                <td>{item?.email}</td>
+                                <td>{item?.transactionId}</td>
                                 <td>{item?.price}</td>
-                                <td>{item?.date}</td>
+                                <td>{item?.status}</td>
                             </tr>)
                         }
 
